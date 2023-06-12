@@ -19,9 +19,8 @@ const Register = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/register", inputs);
-      console.log(res);
-    //   navigate("/login");
+      await axios.post("/api/auth/register", inputs);
+      navigate("/login");
     } catch (err) {
       setError(err.response.data);
     }
@@ -40,8 +39,6 @@ const Register = () => {
     };
     fetchData();
   }, [])
-
-  console.log(err);
 
   return (
     <div className="auth">
@@ -69,7 +66,7 @@ const Register = () => {
           onChange={handleChange}
         />
         <button onClick={handleSubmit}>Register</button>
-        {/* {err && <p>{err}</p>} */}
+        {err && <p>{err}</p>}
         <span>
           Do you have an account? <Link to="/login">Login</Link>
         </span>
