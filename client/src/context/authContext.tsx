@@ -2,11 +2,11 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 interface currentUserType {
-  user: string;
+  username: string;
 }
 interface CurrentUserContextType {
   currentUser: currentUserType | null
-  login: (inputs: string) => Promise<void>
+  login: (inputs: {username: string, password: string}) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -14,7 +14,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const AuthContext = createContext<CurrentUserContextType | null>(null);
+export const AuthContext = createContext<CurrentUserContextType>({} as CurrentUserContextType);
 
 export const AuthContexProvider = ({ children }: Props) => {
   const [currentUser, setCurrentUser] = useState<currentUserType | null>(
@@ -24,7 +24,7 @@ export const AuthContexProvider = ({ children }: Props) => {
     }
   );
 
-  const login = async (inputs: string) => {
+  const login = async (inputs: {username: string, password: string}) => {
     const res = await axios.post("api/auth/login", inputs);
     setCurrentUser(res.data);
     console.log(res);

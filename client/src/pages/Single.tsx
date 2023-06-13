@@ -6,17 +6,9 @@ import Delete from "../assets/delete.png";
 import Edit from "../assets/edit.png";
 import Menu from "../components/Menu";
 import { AuthContext } from "../context/authContext";
+import { postType } from "../database";
+import DOMPurify from "dompurify";
 
-type postType = {
-  id: number;
-  title: string;
-  desc: string;
-  img: string;
-  date: Date;
-  cat: string;
-  username: string;
-  userImg: string;
-};
 
 const Single = () => {
   const [post, setPost] = useState<Partial<postType>>({});
@@ -42,7 +34,7 @@ const Single = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${postId}`);
+      await axios.delete(`/api/posts/${postId}`);
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -52,16 +44,16 @@ const Single = () => {
   return (
     <div className="single">
       <div className="content">
-        <img src={post?.img} alt="" />
+        <img src={`../upload/${post?.img}`} alt="" />
         <div className="user">
           {post.userImg && <img src={post.userImg} alt="" />}
           <div className="info">
             <span>{post.username}</span>
             <p>Posted {moment(post.date).fromNow()}</p>
           </div>
-          {currentUser.username === post.username && (
+          {currentUser?.username === post.username && (
             <div className="edit">
-              <Link to={`/write?edit=2`}>
+              <Link to={`/write?edit=2`} state={post}>
                 <img src={Edit} alt="" />
               </Link>
               <img onClick={handleDelete} src={Delete} alt="" />
@@ -69,7 +61,11 @@ const Single = () => {
           )}
         </div>
         <h1>{post.title}</h1>
-        {post.desc}
+        <p
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post.desc),
+          }}
+        ></p> 
         {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, quam. Vel in magnam dolorem, delectus, quasi expedita eveniet distinctio architecto, laboriosam blanditis aliquid. Enim, itaque mollitia. Vero, sunt. Exercitationem, autem?
         <br />
         <br />
@@ -82,7 +78,7 @@ const Single = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, quam. Vel in magnam dolorem, delectus, quasi expedita eveniet distinctio architecto, laboriosam blanditis aliquid. Enim, itaque mollitia. Vero, sunt. Exercitationem, autem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, quam. Vel in magnam dolorem, delectus, quasi expedita eveniet distinctio architecto, laboriosam blanditis aliquid. Enim, itaque mollitia. Vero, sunt. Exercitationem, autem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, quam. Vel in magnam dolorem, delectus, quasi expedita eveniet distinctio architecto, laboriosam blanditis aliquid. Enim, itaque mollitia. Vero, sunt. Exercitationem, autem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, quam. Vel in magnam dolorem, delectus, quasi expedita eveniet distinctio architecto, laboriosam blanditis aliquid. Enim, itaque mollitia. Vero, sunt. Exercitationem, autem?
         </p> */}
       </div>
-      <Menu />
+      <Menu cat={post.cat} />
     </div>
   );
 };
