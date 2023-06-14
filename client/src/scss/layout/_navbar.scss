@@ -14,14 +14,35 @@
     .links {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 1rem;
+
+      > :nth-child(6) {
+        margin-right: 2rem;
+      }
 
       h6 {
         font-size: 16px;
         font-weight: 300;
+
+        &:hover {
+          color: teal
+        }
       }
 
-      span {
+      .currentUser {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: teal;
+
+        .avatar {
+          width: 2rem;
+          cursor: pointer;
+        }
+      }
+
+      .logout {
         cursor: pointer;
       }
 
@@ -33,6 +54,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-left: 2rem;
         font-weight: 300;
         border: 1px solid white;
 

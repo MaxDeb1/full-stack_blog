@@ -9,7 +9,7 @@ const Categories = ({cat, setCat}: Props) => {
     <div className="item">
       <h1>Category</h1>
       {categories.map((category) => (
-        <div className="cat">
+        <div className="cat" key={category}>
           <input
             type="radio"
             checked={cat === category}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    file: "../upload/default_avatar.png"
   });
   const [err, setError] = useState(null);
 
@@ -25,20 +26,6 @@ const Register = () => {
       setError(err.response.data);
     }
   };
-
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`/api/user/getUsers`);
-        setUsers(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, [])
 
   return (
     <div className="auth">
@@ -70,9 +57,6 @@ const Register = () => {
         <span>
           Do you have an account? <Link to="/login">Login</Link>
         </span>
-        {users && users.map((user) => (
-          <div key={user}>{user}</div>
-        ))}
       </form>
     </div>
   );

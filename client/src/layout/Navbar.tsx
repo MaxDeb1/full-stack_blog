@@ -33,9 +33,12 @@ const Navbar = () => {
           <Link className="link" to="/?cat=food">
             <h6>FOOD</h6>
           </Link>
-          <span>{currentUser?.username}</span>
+          <div className="currentUser">
+            {currentUser? <img src={currentUser.img} alt="avatar" className="avatar" /> : ""}
+            <span>{currentUser?.username}</span>
+          </div>
           {currentUser ? (
-            <span onClick={logout}>Logout</span>
+            <span className="logout" onClick={logout}>Logout</span>
           ) : (
             <Link className="link" to="/login">
               Login
