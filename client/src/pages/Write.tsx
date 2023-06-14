@@ -4,12 +4,13 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import Categories from "../components/Categories";
 
 const Write = () => {
   const state = useLocation().state;
   const [value, setValue] = useState<string>(state?.desc || "");
   const [title, setTitle] = useState<string>(state?.title || "");
-  const [file, setFile] = useState<string | Blob>("");
+  const [file, setFile] = useState<string | Blob>(state?.img || "");
   const [cat, setCat] = useState<string>(state?.cat || "");
 
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const Write = () => {
             type="file"
             id="file"
             name=""
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => setFile((e.target as HTMLInputElement).files![0])}
           />
           <label className="file" htmlFor="file">
             Upload Image
@@ -92,7 +93,8 @@ const Write = () => {
             <button onClick={handleSubmit}>Publish</button>
           </div>
         </div>
-        <div className="item">
+        <Categories cat={cat} setCat={setCat} />
+{/*         <div className="item">
           <h1>Category</h1>
           <div className="cat">
             <input
@@ -160,7 +162,7 @@ const Write = () => {
             />
             <label htmlFor="food">Food</label>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
