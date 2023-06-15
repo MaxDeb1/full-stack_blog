@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 
 interface currentUserType {
   username: string;
+  img: string;
 }
 interface CurrentUserContextType {
   currentUser: currentUserType | null

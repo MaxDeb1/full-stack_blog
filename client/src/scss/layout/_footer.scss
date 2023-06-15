@@ -1,11 +1,14 @@
 footer {
-  margin-top: 100px;
+  width: 100%;
   padding: 20px;
   background-color: $lightGreen;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  flex: 1;
 
   img {
     height: 50px;
